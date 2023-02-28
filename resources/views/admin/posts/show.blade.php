@@ -7,8 +7,8 @@
 @section('content')
 <div class="container">
     <div class="card text-center mt-5">
-        <div class="card-header">
-            {{ $post->author }}
+        <div class="card-header fw-bold">
+            {{ $post->author }} --- {{ $post->type->name }}
         </div>
         <div class="card-body p-3 m-3">
             <h2 class="card-title fw-bold p-3">

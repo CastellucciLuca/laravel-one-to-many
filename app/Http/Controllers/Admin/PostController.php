@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -17,7 +18,8 @@ class PostController extends Controller
         'title' => ['required', 'unique:posts' ],
         'post_date' => 'required',
         'content' => 'required',
-        'image' => 'required|image|max:300'
+        'image' => 'required|image|max:300',
+        'type_id' => 'required|exists:types,id'
     ];
     /**
      * Display a listing of the resource.
@@ -37,7 +39,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create', ["post"=>new Post()]);
+        return view('admin.posts.create', ["post"=>new Post(),"typesList" => Type::all()]);
     }
 
     /**
@@ -77,7 +79,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('admin.posts.edit', compact('post'));
+        return view('admin.posts.edit', ['post' => $post , 'typesList' => Type::all()]);
     }
 
     /**
@@ -93,7 +95,8 @@ class PostController extends Controller
             'title' => ['required', Rule::unique('posts')->ignore($post->id) ],
             'post_date' => 'required',
             'content' => 'required',
-            'image' => 'image|required|max:300'
+            'image' => 'image|required|max:300',
+            'type_id' => 'required|exists:types,id'
         ]);
         if ($request->hasFile('image')){
             if (!$post->isImageAUrl()){

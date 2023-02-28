@@ -21,6 +21,20 @@
     </h5>
 
     <div class="mb-3">
+        <label for="post_category" class="form-label">
+            Post Title
+        </label>
+
+        <select  class="form-control" id="post_type" name="type_id" >
+            @foreach ($typesList as $type)
+                <option value="{{ $type->id }}"
+                    {{ old('type_id', $post->type_id) ==  $type->id ? 'selected' : '' }}> {{ $type->name }}
+                </option>
+            @endforeach
+        </select>
+
+    </div>
+    <div class="mb-3">
         <label for="post_title" class="form-label">Post Title</label>
         <input type="text" class="form-control" id="post_title" placeholder="Insert Post title" name="title" value="{{ old('title', $post->title )}}">
     </div>

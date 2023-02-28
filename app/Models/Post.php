@@ -8,10 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     use HasFactory;
-    protected $fillable = ['author', 'slug', 'title', 'post_date', 'content', 'image'];
+    protected $fillable = ['author', 'slug', 'title', 'post_date', 'content', 'image','type_id'];
 
+    public function type()
+    {
+        return $this->belongsTo(Type::class);
+    }
 
-public function isImageAUrl(){
+    public function isImageAUrl(){
     return filter_var($this->image, FILTER_VALIDATE_URL);
 }
 }
